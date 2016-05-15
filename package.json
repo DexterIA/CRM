@@ -1,0 +1,8 @@
+{
+  "name": "CRM",
+  "version": "0.0.1",
+  "description": "Track customers order history and personal data.",
+  "dependencies": {
+    "mongodb": "^2.1.18"
+  }
+}

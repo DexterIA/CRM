@@ -1,0 +1,80 @@
+[
+  {
+    "id": 1,
+    "email": "i.ivanov@gmail.com",
+    "login": "ivanov",
+    "pass": 123,
+    "personalInformation": {
+      "firstName": "Иван",
+      "lastName": "Иванов",
+      "sex": "male",
+      "telNumber": "+7 918 455-55-05",
+      "city": "Краснодар",
+      "birthday": "19.12.1992"
+    },
+    "orders": [
+      {
+        "id": 23,
+        "date": "13.05.2016",
+        "status": "Завершен",
+        "items": [
+          {
+            "id": 54545,
+            "name": "Стол формата А4, розовенький",
+            "amount": 1,
+            "price": 100,
+            "currency": "руб."
+          }, {
+            "id": 45451,
+            "name": "Шкаф большой, голубенький",
+            "amount": 2,
+            "price": 500,
+            "currency": "руб."
+          }
+        ]
+      }, {
+        "id": 19,
+        "date": "15.05.2016",
+        "status": "Отгрузка со склада",
+        "items": [
+          {
+            "id": 54555,
+            "name": "Стульчик, детский",
+            "amount": 2,
+            "price": 50,
+            "currency": "руб."
+          }
+        ]
+      }
+    ]
+  }, {
+    "id": 4,
+    "email": "a.petrova@gmail.com",
+    "login": "alina",
+    "pass": 12345,
+    "personalInformation": {
+      "firstName": "Алина",
+      "lastName": "Петрова",
+      "sex": "female",
+      "telNumber": "+7 952 755-55-75",
+      "city": "Краснодар",
+      "birthday": "04.12.1995"
+    },
+    "orders": [
+      {
+        "id": 17,
+        "date": "10.05.2016",
+        "status": "Завершен",
+        "items": [
+          {
+            "id": 54545,
+            "name": "Стол формата А4, розовенький",
+            "amount": 2,
+            "price": 100,
+            "currency": "руб."
+          }
+        ]
+      }
+    ]
+  }
+]
