@@ -1,0 +1,29 @@
+<md-dialog aria-label="Вход" ng-cloak style="width: 355px">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Login</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="img/ic_close.svg" aria-label="Закрыть диалог"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <md-content layout="column" class="md-dialog-content md-padding">
+                <md-input-container>
+                    <label>Логин:</label>
+                    <input type="text" ng-model="login" required>
+                </md-input-container>
+                <md-input-container>
+                    <label>Пароль:</label>
+                    <input type="password" ng-model="pass" required>
+                </md-input-container>
+                <md-button class="md-primary md-raised" ng-click="processLogin()">
+                    Login
+                </md-button>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>
