@@ -2,11 +2,12 @@ var MongoClient = require('mongodb').MongoClient,
   test = require('assert'),
 
   /**
-   * Функция получения списка всех клиентов
+   * Функция проверки логина и пароля
    * @param {String} url - строка подключения к БД
-   * @param {function} callback - в параметре возвращаем данные о клиентах
+   * @param {Object} auth - проверяемый логин и пароль
+   * @param {Function} callback - в параметре true или false
    */
-  getCustomers = function (url, callback) {
+  checkAuth = function (url, auth, callback) {
     MongoClient.connect(url, function (err, db) {
       console.log('Connected succesfully to server');
       var collection = db.collection('customers');
@@ -15,9 +16,15 @@ var MongoClient = require('mongodb').MongoClient,
         db.close();
         test.equal(null, err);
         console.log('Connection closed');
-        callback(data);
+        var equal = false;
+        data.forEach(function(item) {
+          if (item.login === auth.login && item.pass === auth.pass) {
+            equal = true;
+          }
+        });
+        callback(equal);
       });
     });
   };
 
-module.exports = getCustomers;
+module.exports = checkAuth;

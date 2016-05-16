@@ -4,7 +4,11 @@ angular.module('CRM', ['ngMaterial', 'ngMessages', 'loginPage'])
       $scope.status = '  ';
       $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
 
-      $scope.showAdvanced = function (ev) {
+      /**
+       * Функция для отображения диалога логина
+       * @param ev - event
+       */
+      $scope.showLoginDialog = function (ev) {
         var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
 
         $mdDialog.show({
@@ -25,7 +29,7 @@ angular.module('CRM', ['ngMaterial', 'ngMessages', 'loginPage'])
         $scope.$watch(function () {
           return $mdMedia('xs') || $mdMedia('sm');
         }, function (wantsFullScreen) {
-          $scope.customFullscreen = (wantsFullScreen === true);
+          $scope.customFullscreen = wantsFullScreen === true;
         });
 
       };
