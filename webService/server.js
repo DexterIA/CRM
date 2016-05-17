@@ -2,6 +2,7 @@ var http = require('http'),
   addCustomer = require('./resources/addCustomer'),
   getCustomers = require('./resources/getCustomers'),
   checkAuth = require('./resources/checkAuth'),
+  findCustomer = require('./resources/findCustomer'),
 
   /**
    * Функция для преобразования входных данных
@@ -18,7 +19,7 @@ const PORT = 8081,
   url = 'mongodb://localhost:27017/CRM';
 
 /**
- * Функция предобработки всех запросов - всё попадает в неё
+ * Функция предобработки всех запросов - всё запросы попадают в неё
  * в зависимости от метода и url - выполняем тот или иной запрос к БД
  * @param {Object} request - объект запроса
  * @param {Object} response - объект ответа
@@ -69,6 +70,14 @@ function handleRequest(request, response) {
           });
         });
         break;
+      case '/CRM/findCustomer':
+        request.on('data', function (chunk) {
+          console.log('Received body data:');
+          console.log(chunk.toString());
+          findCustomer(url, JSON.parse(chunk.toString()), function (res) {
+            response.end(JSON.stringify(res));
+          });
+        });
     }
   }
 
