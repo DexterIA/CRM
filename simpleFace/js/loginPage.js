@@ -1,5 +1,5 @@
-angular.module('loginPage', ['ngMaterial', 'ngMessages'])
-  .controller('loginPageCtrl', function($scope, $mdDialog) {
+angular.module('loginPage', ['ngMaterial', 'ngMessages', 'ngResource'])
+  .controller('loginPageCtrl', ['$scope', '$mdDialog', '$resource', function($scope, $mdDialog, $resource) {
     /**
      * Функция, скрывающая диалог
      */
@@ -19,6 +19,8 @@ angular.module('loginPage', ['ngMaterial', 'ngMessages'])
      * @param {Object} answer - возвращаемый объект
      */
     $scope.answer = function(answer) {
+      $scope.login = '';
+      $scope.pass = '';
       $mdDialog.hide(answer);
     };
 
@@ -30,7 +32,15 @@ angular.module('loginPage', ['ngMaterial', 'ngMessages'])
      */
     $scope.processLogin = function () {
       if ($scope.login !== '' && $scope.pass !== '') {
-        $scope.cancel();
+        debugger;
+        var auth = $resource('http://127.0.0.1:8081/CRM/checkAuth', {}, {
+          check: { method: 'POST' }
+        });
+        auth.check({login: $scope.login, pass: $scope.pass}, function (data) {
+          if (data) {
+            alert('yes!');
+          }
+        });
       }
     };
-  });
+  }]);

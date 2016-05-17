@@ -9,12 +9,14 @@
     "angular-material": "^1.0.8",
     "angular-messages": "^1.5.5",
     "angular-mocks": "^1.5.5",
+    "angular-resource": "^1.5.5",
     "angular-route": "^1.5.5",
     "angular-sanitize": "^1.5.5",
     "grunt": "^1.0.1",
     "grunt-contrib-jshint": "^1.0.0",
     "grunt-jscs": "^2.8.0",
     "jscs-jsdoc": "^2.0.0",
-    "mongodb": "^2.1.18"
+    "mongodb": "^2.1.18",
+    "stomp-client": "^0.8.1"
   }
 }

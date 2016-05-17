@@ -18,7 +18,7 @@ var MongoClient = require('mongodb').MongoClient,
         console.log('Connection closed');
         var equal = false;
         data.forEach(function(item) {
-          if (item.login === auth.login && item.pass === auth.pass) {
+          if (item.login === auth.login && item.pass == auth.pass) { //jshint ignore: line
             equal = true;
           }
         });

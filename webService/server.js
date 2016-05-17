@@ -24,7 +24,14 @@ const PORT = 8081,
  * @param {Object} response - объект ответа
  */
 function handleRequest(request, response) {
-  response.writeHead(200, {'Content-Type': 'application/json'});
+  response.writeHead(200, {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': request.headers.origin,
+    'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Credentials': false,
+    'Access-Control-Max-Age': '86400',
+    'Access-Control-Allow-Headers': 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
+  });
   /*var meta = {
    requestUrl: request.url,
    requestMethod: request.method,
@@ -63,6 +70,10 @@ function handleRequest(request, response) {
         });
         break;
     }
+  }
+
+  if (request.method === 'OPTIONS') {
+    response.end();
   }
 }
 
