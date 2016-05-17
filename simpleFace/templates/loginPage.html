@@ -8,7 +8,7 @@
         </md-toolbar>
 
         <md-dialog-content>
-            <md-content layout="column" class="md-dialog-content md-padding">
+            <md-content layout="column" style="padding-bottom: 7px" class="md-dialog-content md-padding">
                 <md-input-container>
                     <label>Логин:</label>
                     <input type="text" ng-model="login" required>
@@ -20,6 +20,9 @@
                 <md-button class="md-primary md-raised" ng-click="processLogin()">
                     Login
                 </md-button>
+                <label ng-if="notValid" style="text-align: center; color: #c60008; margin-top: 12px">
+                    Не верный логин или пароль
+                </label>
             </md-content>
         </md-dialog-content>
     </form>

@@ -26,11 +26,11 @@ const PORT = 8081,
 function handleRequest(request, response) {
   response.writeHead(200, {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': request.headers.origin,
+    'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
-    'Access-Control-Allow-Credentials': false,
+    'Access-Control-Allow-Credentials': true,
     'Access-Control-Max-Age': '86400',
-    'Access-Control-Allow-Headers': 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
+    'Access-Control-Allow-Headers': '*'
   });
   /*var meta = {
    requestUrl: request.url,

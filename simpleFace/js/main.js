@@ -1,7 +1,6 @@
 angular.module('CRM', ['ngMaterial', 'ngMessages', 'loginPage'])
   .controller('main', ['$scope', '$mdDialog', '$mdMedia',
     function ($scope, $mdDialog, $mdMedia) {
-      $scope.status = '  ';
       $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
 
       /**
@@ -20,9 +19,7 @@ angular.module('CRM', ['ngMaterial', 'ngMessages', 'loginPage'])
             fullscreen: useFullScreen
           })
           .then(function (answer) {
-            $scope.status = 'You said the information was "' + answer + '".';
-          }, function () {
-            $scope.status = 'You cancelled the dialog.';
+            $scope.login = answer;
           });
 
 
