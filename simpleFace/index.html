@@ -18,8 +18,30 @@
         <div class="dialog-demo-content" ng-init="showLoginDialog($event)"
              layout="row" layout-wrap="" layout-margin="" layout-align="center">
         </div>
-        <div ng-if="login">
-
+        <div ng-if="showInfo">
+            <label class="base">Имя: {{customer.personalInformation.firstName}}</label>
+            <label class="base">Фамилия: {{customer.personalInformation.lastName}}</label>
+            <label class="base">email: {{customer.email}}</label>
+            <label class="base">Номер телефона: {{customer.personalInformation.telNumber}}</label>
+            <label class="base">Город: {{customer.personalInformation.city}}</label>
+            <label class="base">Дата рождения: {{customer.personalInformation.birthday}}</label>
+            <label class="base" style="padding: 12px 12px 0 12px">Заказы:</label>
+            <div ng-repeat="order in customer.orders track by $index">
+                <label class="order" style="padding-top: 8px">Дата: {{order.date}}</label>
+                <label class="order">Статус: {{order.status}}</label>
+                <label class="order">Товары:</label>
+                <div ng-repeat="item in order.items">
+                    <label class="item">Наиманование: {{item.name}}</label>
+                    <label class="item">Количество: {{item.amount}}</label>
+                    <label class="item">Цена, за ед.: {{item.price + item.currency}}</label>
+                </div>
+            </div>
+            <md-button class="md-primary md-raised" ng-click="showLoginDialog($event)">
+                Выход
+            </md-button>
+            <md-button class="md-primary md-raised" ng-click="loadCustomer()">
+                Обновить
+            </md-button>
         </div>
     </div>
 </body>

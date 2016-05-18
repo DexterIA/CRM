@@ -15,3 +15,17 @@
 
 .dialogdemoBasicUsage div#status {
     color: #c60008; }
+
+label.base {
+    display: block;
+}
+
+label.order {
+    display: block;
+    padding-left: 12px;
+}
+
+label.item {
+    display: block;
+    padding-left: 35px
+}
