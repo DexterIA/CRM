@@ -5,6 +5,7 @@ var http = require('http'),
   findClient = require('./resources/findClient'),
   addOrder = require('./resources/addOrder'),
   findOrders = require('./resources/findOrders'),
+  changeOrderStatus = require('./resources/changeOrderStatus'),
 
   /**
    * Функция для преобразования входных данных
@@ -26,7 +27,7 @@ const PORT = 8081,
  * @param {Object} request - объект запроса
  * @param {Object} response - объект ответа
  */
-function handleRequest(request, response) {
+function handleRequest (request, response) {
   response.writeHead(200, {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
@@ -35,12 +36,6 @@ function handleRequest(request, response) {
     'Access-Control-Max-Age': '86400',
     'Access-Control-Allow-Headers': '*'
   });
-  /*var meta = {
-   requestUrl: request.url,
-   requestMethod: request.method,
-   requestHeaders: request.headers,
-   requestData: request.data
-   };*/
 
   // Дальше велосипед, просьба слабонервным не смотреть
   if (request.method === 'GET') {
@@ -99,6 +94,16 @@ function handleRequest(request, response) {
             response.end(JSON.stringify(res));
           });
         });
+        break;
+      case '/CRM/changeOrderStatus':
+        request.on('data', function (chunk) {
+          console.log('Received body data:');
+          console.log(chunk.toString());
+          changeOrderStatus(url, JSON.parse(chunk.toString()), function (res) {
+            response.end(JSON.stringify(res));
+          });
+        });
+        break;
     }
   }
 
