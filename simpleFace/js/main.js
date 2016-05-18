@@ -9,7 +9,7 @@ angular.module('CRM', ['ngMaterial', 'ngMessages', 'loginPage'])
        */
       $scope.showLoginDialog = function (ev) {
         var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
-        $scope.login = null;
+        $scope.id = null;
         $scope.showInfo = false;
 
         $mdDialog.show({
@@ -21,7 +21,7 @@ angular.module('CRM', ['ngMaterial', 'ngMessages', 'loginPage'])
             fullscreen: useFullScreen
           })
           .then(function (answer) {
-            $scope.login = answer;
+            $scope.id = answer;
             $scope.loadCustomer();
           });
 
@@ -35,11 +35,17 @@ angular.module('CRM', ['ngMaterial', 'ngMessages', 'loginPage'])
       };
 
       $scope.loadCustomer = function () {
-        var auth = $http.post('http://127.0.0.1:8081/CRM/findCustomer', {login: $scope.login});
+        var auth = $http.post('http://127.0.0.1:8081/CRM/findClient', {id: $scope.id}),
+          orders = $http.post('http://127.0.0.1:8081/CRM/findOrders', {clientId: $scope.id});
         auth.success(function(data) {
           if (data && data[0]){
             $scope.customer = data[0];
             $scope.showInfo = true;
+          }
+        });
+        orders.success(function(data) {
+          if (data && data.length && data.length > 0) {
+            $scope.customerOrders = data;
           }
         });
       };

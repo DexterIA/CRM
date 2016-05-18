@@ -1,8 +1,10 @@
 var http = require('http'),
-  addCustomer = require('./resources/addCustomer'),
-  getCustomers = require('./resources/getCustomers'),
+  addClient = require('./resources/addClient'),
+  getClients = require('./resources/getClients'),
   checkAuth = require('./resources/checkAuth'),
-  findCustomer = require('./resources/findCustomer'),
+  findClient = require('./resources/findClient'),
+  addOrder = require('./resources/addOrder'),
+  findOrders = require('./resources/findOrders'),
 
   /**
    * Функция для преобразования входных данных
@@ -43,8 +45,8 @@ function handleRequest(request, response) {
   // Дальше велосипед, просьба слабонервным не смотреть
   if (request.method === 'GET') {
     switch (request.url) {
-      case '/CRM/getCustomers':
-        getCustomers(url, function (res) {
+      case '/CRM/getClients':
+        getClients(url, function (res) {
           response.end(JSON.stringify(res));
         });
         break;
@@ -52,11 +54,11 @@ function handleRequest(request, response) {
   }
   if (request.method === 'POST') {
     switch (request.url) {
-      case '/CRM/addCustomer':
+      case '/CRM/addClient':
         request.on('data', function (chunk) {
           console.log('Received body data:');
           console.log(chunk.toString());
-          addCustomer(url, customerData(JSON.parse(chunk.toString())), function (res) {
+          addClient(url, customerData(JSON.parse(chunk.toString())), function (res) {
             response.end(JSON.stringify(res));
           });
         });
@@ -70,11 +72,30 @@ function handleRequest(request, response) {
           });
         });
         break;
-      case '/CRM/findCustomer':
+      case '/CRM/findClient':
         request.on('data', function (chunk) {
           console.log('Received body data:');
           console.log(chunk.toString());
-          findCustomer(url, JSON.parse(chunk.toString()), function (res) {
+          findClient(url, JSON.parse(chunk.toString()), function (res) {
+            response.end(JSON.stringify(res));
+          });
+        });
+        break;
+      case '/CRM/addOrder':
+        request.on('data', function (chunk) {
+          console.log('Received body data:');
+          console.log(chunk.toString());
+          addOrder(url, JSON.parse(chunk.toString()), function (res) {
+            response.end(JSON.stringify(res));
+          });
+        });
+        break;
+      case '/CRM/findOrders':
+        request.on('data', function (chunk) {
+          console.log('Received body data:');
+          console.log(chunk.toString());
+          var filter = JSON.parse(chunk.toString()) || {};
+          findOrders(url, filter, function (res) {
             response.end(JSON.stringify(res));
           });
         });

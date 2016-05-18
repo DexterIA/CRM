@@ -7,11 +7,11 @@ var MongoClient = require('mongodb').MongoClient,
    * @param {Object} data - данные о клиенте,  которые нужно сохранить
    * @param {function} callback - возвращаем результат сохранения
    */
-  addCustomer = function (url, data, callback) {
+  addClient = function (url, data, callback) {
     MongoClient.connect(url, function (err, db) {
       console.log('Connected succesfully to server');
-      var collection = db.collection('customers');
-      console.log('Add customer');
+      var collection = db.collection('clients');
+      console.log('Add client');
       collection.insertOne(data, function (err, res) {
         db.close();
         test.equal(null, err);
@@ -21,4 +21,4 @@ var MongoClient = require('mongodb').MongoClient,
     });
   };
 
-module.exports = addCustomer;
+module.exports = addClient;

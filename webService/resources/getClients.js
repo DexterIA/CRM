@@ -6,11 +6,11 @@ var MongoClient = require('mongodb').MongoClient,
    * @param {String} url - строка подключения к БД
    * @param {function} callback - в параметре возвращаем данные о клиентах
    */
-  getCustomers = function (url, callback) {
+  getClients = function (url, callback) {
     MongoClient.connect(url, function (err, db) {
       console.log('Connected succesfully to server');
-      var collection = db.collection('customers');
-      console.log('Get customers');
+      var collection = db.collection('clients');
+      console.log('Get clients');
       collection.find({}).toArray(function (err, data) {
         db.close();
         test.equal(null, err);
@@ -20,4 +20,4 @@ var MongoClient = require('mongodb').MongoClient,
     });
   };
 
-module.exports = getCustomers;
+module.exports = getClients;

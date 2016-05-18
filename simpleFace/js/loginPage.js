@@ -39,7 +39,7 @@ angular.module('loginPage', ['ngMaterial', 'ngMessages'])
         var auth = $http.post('http://127.0.0.1:8081/CRM/checkAuth', {login: $scope.login, pass: $scope.pass});
         auth.success(function(data) {
           if (data) {
-            $scope.answer($scope.login);
+            $scope.answer(data);
           } else {
             $scope.notValid = true;
           }

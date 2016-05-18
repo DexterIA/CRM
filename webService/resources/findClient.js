@@ -7,11 +7,11 @@ var MongoClient = require('mongodb').MongoClient,
    * @param {Object} filter - фильтр по клиентам
    * @param {Function} callback - в параметре объект клиента
    */
-  findCustomer = function (url, filter, callback) {
+  findClient = function (url, filter, callback) {
     MongoClient.connect(url, function (err, db) {
       console.log('Connected succesfully to server');
-      var collection = db.collection('customers');
-      console.log('Find customer');
+      var collection = db.collection('clients');
+      console.log('Find client');
       collection.find(filter).toArray(function (err, data) {
         db.close();
         test.equal(null, err);
@@ -21,4 +21,4 @@ var MongoClient = require('mongodb').MongoClient,
     });
   };
 
-module.exports = findCustomer;
+module.exports = findClient;

@@ -19,14 +19,14 @@
              layout="row" layout-wrap="" layout-margin="" layout-align="center">
         </div>
         <div ng-if="showInfo">
-            <label class="base">Имя: {{customer.personalInformation.firstName}}</label>
-            <label class="base">Фамилия: {{customer.personalInformation.lastName}}</label>
+            <label class="base">Имя: {{customer.firstName}}</label>
+            <label class="base">Фамилия: {{customer.lastName}}</label>
             <label class="base">email: {{customer.email}}</label>
-            <label class="base">Номер телефона: {{customer.personalInformation.telNumber}}</label>
-            <label class="base">Город: {{customer.personalInformation.city}}</label>
-            <label class="base">Дата рождения: {{customer.personalInformation.birthday}}</label>
+            <label class="base">Номер телефона: {{customer.telNumber}}</label>
+            <label class="base">Город: {{customer.city}}</label>
+            <label class="base">Дата рождения: {{customer.birthday}}</label>
             <label class="base" style="padding: 12px 12px 0 12px">Заказы:</label>
-            <div ng-repeat="order in customer.orders track by $index">
+            <div ng-repeat="order in customerOrders track by $index">
                 <label class="order" style="padding-top: 8px">Дата: {{order.date}}</label>
                 <label class="order">Статус: {{order.status}}</label>
                 <label class="order">Товары:</label>

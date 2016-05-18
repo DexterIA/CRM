@@ -10,19 +10,22 @@ var MongoClient = require('mongodb').MongoClient,
   checkAuth = function (url, auth, callback) {
     MongoClient.connect(url, function (err, db) {
       console.log('Connected succesfully to server');
-      var collection = db.collection('customers');
-      console.log('Get customers');
+      var collection = db.collection('clients');
+      console.log('Get clients');
       collection.find({}).toArray(function (err, data) {
         db.close();
         test.equal(null, err);
         console.log('Connection closed');
-        var equal = false;
+        var id;
         data.forEach(function(item) {
           if (item.login === auth.login && item.pass == auth.pass) { //jshint ignore: line
-            equal = true;
+            id = item.id;
           }
         });
-        callback(equal);
+        if (!id) {
+          id = false;
+        }
+        callback(id);
       });
     });
   };
