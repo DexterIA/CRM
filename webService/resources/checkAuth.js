@@ -5,7 +5,7 @@ var MongoClient = require('mongodb').MongoClient,
    * Функция проверки логина и пароля
    * @param {String} url - строка подключения к БД
    * @param {Object} auth - проверяемый логин и пароль
-   * @param {Function} callback - в параметре true или false
+   * @param {Function} callback - в параметре id клиента или false
    */
   checkAuth = function (url, auth, callback) {
     MongoClient.connect(url, function (err, db) {
