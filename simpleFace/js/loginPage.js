@@ -34,16 +34,23 @@ angular.module('loginPage', ['ngMaterial', 'ngMessages'])
     /**
      * Проверяем введённый логин и пароль
      */
+
+
     $scope.processLogin = function () {
       if ($scope.login && $scope.pass) {
-        var auth = $http.post('http://127.0.0.1:8081/CRM/checkAuth', {login: $scope.login, pass: $scope.pass});
-        auth.success(function(data) {
-          if (data) {
-            $scope.answer(data);
+        $http({
+          method: 'POST',
+          url: 'http://127.0.0.1:8081/CRM/checkAuth',
+          withCredentials: true,
+          headers: {'Content-Type': 'application/json'},
+          data: {login: $scope.login, pass: $scope.pass}
+        }).then(function(result) {
+          if (result.data) {
+            $scope.answer(result.data);
           } else {
             $scope.notValid = true;
           }
-          });
+        });
       }
     };
   }]);

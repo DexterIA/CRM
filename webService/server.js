@@ -16,6 +16,21 @@ var http = require('http'),
   customerData = function (data) {
     // TODO реализовать, при необходимости
     return data;
+  },
+
+  /**
+   * Возвращает объект с хедэрами для Allow Cross Origin
+   * @param {Object} req - объект запроса
+   * @returns {Object} - хедэры
+   */
+  getCommonHeaders = function (req) {
+    return {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': req.headers.origin || '*',
+      'Access-Control-Allow-Credentials': true,
+      'Access-Control-Allow-Headers': req.headers['access-control-request-headers'] ? req.headers['access-control-request-headers'] : 'x-requested-with',
+      'Access-Control-Allow-Methods': req.headers['access-control-request-method'] ? req.headers['access-control-request-method'] : 'POST, GET, PUT, DELETE, OPTIONS'
+    };
   };
 
 const PORT = 8081,
@@ -28,20 +43,13 @@ const PORT = 8081,
  * @param {Object} response - объект ответа
  */
 function handleRequest (request, response) {
-  response.writeHead(200, {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
-    'Access-Control-Allow-Credentials': true,
-    'Access-Control-Max-Age': '86400',
-    'Access-Control-Allow-Headers': '*'
-  });
 
   // Дальше велосипед, просьба слабонервным не смотреть
   if (request.method === 'GET') {
     switch (request.url) {
       case '/CRM/getClients':
         getClients(url, function (res) {
+          response.writeHead(200, getCommonHeaders(request));
           response.end(JSON.stringify(res));
         });
         break;
@@ -54,6 +62,7 @@ function handleRequest (request, response) {
           console.log('Received body data:');
           console.log(chunk.toString());
           addClient(url, customerData(JSON.parse(chunk.toString())), function (res) {
+            response.writeHead(200, getCommonHeaders(request));
             response.end(JSON.stringify(res));
           });
         });
@@ -63,6 +72,7 @@ function handleRequest (request, response) {
           console.log('Received body data:');
           console.log(chunk.toString());
           checkAuth(url, JSON.parse(chunk.toString()), function (res) {
+            response.writeHead(200, getCommonHeaders(request));
             response.end(JSON.stringify(res));
           });
         });
@@ -72,6 +82,7 @@ function handleRequest (request, response) {
           console.log('Received body data:');
           console.log(chunk.toString());
           findClient(url, JSON.parse(chunk.toString()), function (res) {
+            response.writeHead(200, getCommonHeaders(request));
             response.end(JSON.stringify(res));
           });
         });
@@ -81,6 +92,7 @@ function handleRequest (request, response) {
           console.log('Received body data:');
           console.log(chunk.toString());
           addOrder(url, JSON.parse(chunk.toString()), function (res) {
+            response.writeHead(200, getCommonHeaders(request));
             response.end(JSON.stringify(res));
           });
         });
@@ -91,6 +103,7 @@ function handleRequest (request, response) {
           console.log(chunk.toString());
           var filter = JSON.parse(chunk.toString()) || {};
           findOrders(url, filter, function (res) {
+            response.writeHead(200, getCommonHeaders(request));
             response.end(JSON.stringify(res));
           });
         });
@@ -100,14 +113,19 @@ function handleRequest (request, response) {
           console.log('Received body data:');
           console.log(chunk.toString());
           changeOrderStatus(url, JSON.parse(chunk.toString()), function (res) {
+            response.writeHead(200, getCommonHeaders(request));
             response.end(JSON.stringify(res));
           });
         });
         break;
+      default:
+        response.writeHead(404, {'content-type': 'text/html'});
+        response.end();
     }
   }
 
   if (request.method === 'OPTIONS') {
+    response.writeHead(200, getCommonHeaders(request));
     response.end();
   }
 }
