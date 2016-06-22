@@ -16,7 +16,7 @@ var MongoClient = require('mongodb').MongoClient,
       collection.find(filter).toArray(function (err, data) {
         test.equal(null, err);
         var newOrder = data[0];
-        newOrder.status = order.newStatus;
+        newOrder.status = order.status;
         collection.updateOne(filter, newOrder, function (error, res) {
           test.equal(null, error);
           db.close();
