@@ -6,6 +6,7 @@ var http = require('http'),
   addOrder = require('./resources/addOrder'),
   findOrders = require('./resources/findOrders'),
   changeOrderStatus = require('./resources/changeOrderStatus'),
+  getClientByOrderId = require('./resources/getClientByOrderId'),
 
   /**
    * Функция для преобразования входных данных
@@ -46,16 +47,20 @@ function handleRequest (request, response) {
 
   // Дальше велосипед, просьба слабонервным не смотреть
   if (request.method === 'GET') {
-    switch (request.url) {
-      case '/CRM/getClients':
-        getClients(url, function (res) {
-          response.writeHead(200, getCommonHeaders(request));
-          response.end(JSON.stringify(res));
-        });
-        break;
-      default:
-        response.writeHead(404, {'content-type': 'text/html'});
-        response.end();
+    if (request.url === '/CRM/getClients') {
+      getClients(url, function (res) {
+        response.writeHead(200, getCommonHeaders(request));
+        response.end(JSON.stringify(res));
+      });
+    } else if (request.url.indexOf('/CRM/getClient?orderId=') !== -1) {
+      var orderId = request.url.substring('/CRM/getClient?orderId='.length, request.url.length);
+      getClientByOrderId(url, orderId, function (res) {
+        response.writeHead(200, getCommonHeaders(request));
+        response.end(JSON.stringify(res));
+      });
+    } else {
+      response.writeHead(404, {'content-type': 'text/html'});
+      response.end();
     }
   }
   if (request.method === 'POST') {
