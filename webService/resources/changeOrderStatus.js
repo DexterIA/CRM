@@ -10,20 +10,22 @@ var MongoClient = require('mongodb').MongoClient,
   changeOrderStatus = function (url, order, callback) {
     MongoClient.connect(url, function (err, db) {
       console.log('Connected succesfully to server');
-      var collection = db.collection('orders'),
-        filter = {id: order.orderId};
-      console.log('Find orders');
-      collection.find(filter).toArray(function (err, data) {
-        test.equal(null, err);
-        var newOrder = data[0];
-        newOrder.status = order.status;
-        collection.updateOne(filter, newOrder, function (error, res) {
-          test.equal(null, error);
-          db.close();
-          console.log('Connection closed');
-          callback(res);
+      if (order && order.orderId && order.status) {
+        var collection = db.collection('orders'),
+          filter = {id: order.orderId};
+        console.log('Find orders');
+        collection.find(filter).toArray(function (err, data) {
+          test.equal(null, err);
+          var newOrder = data[0];
+          newOrder.status = order.status;
+          collection.updateOne(filter, newOrder, function (error, res) {
+            test.equal(null, error);
+            db.close();
+            console.log('Connection closed');
+            callback(res);
+          });
         });
-      });
+      }
     });
   };
 

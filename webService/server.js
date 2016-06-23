@@ -53,6 +53,9 @@ function handleRequest (request, response) {
           response.end(JSON.stringify(res));
         });
         break;
+      default:
+        response.writeHead(404, {'content-type': 'text/html'});
+        response.end();
     }
   }
   if (request.method === 'POST') {
@@ -126,6 +129,11 @@ function handleRequest (request, response) {
 
   if (request.method === 'OPTIONS') {
     response.writeHead(200, getCommonHeaders(request));
+    response.end();
+  }
+
+  if (['PUT', 'DELETE', 'HEAD', 'TRACE'].indexOf(request.method) !== -1) {
+    response.writeHead(405, {'content-type': 'text/html'});
     response.end();
   }
 }
