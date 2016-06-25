@@ -69,20 +69,26 @@ function handleRequest (request, response) {
         request.on('data', function (chunk) {
           console.log('Received body data:');
           console.log(chunk.toString());
-          addClient(url, customerData(JSON.parse(chunk.toString())), function (res) {
-            response.writeHead(200, getCommonHeaders(request));
-            response.end(JSON.stringify(res));
-          });
+          var json = parseJSON(chunk);
+          if (json) {
+            addClient(url, customerData(JSON.parse(chunk.toString())), function (res) {
+              response.writeHead(200, getCommonHeaders(request));
+              response.end(JSON.stringify(res));
+            });
+          }
         });
         break;
       case '/CRM/checkAuth':
         request.on('data', function (chunk) {
           console.log('Received body data:');
           console.log(chunk.toString());
-          checkAuth(url, JSON.parse(chunk.toString()), function (res) {
-            response.writeHead(200, getCommonHeaders(request));
-            response.end(JSON.stringify(res));
-          });
+          var json = parseJSON(chunk);
+          if (json) {
+            checkAuth(url, JSON.parse(chunk.toString()), function (res) {
+              response.writeHead(200, getCommonHeaders(request));
+              response.end(JSON.stringify(res));
+            });
+          }
         });
         break;
       case '/CRM/findClient':
@@ -148,3 +154,15 @@ var server = http.createServer(handleRequest);
 server.listen(PORT, function () {
   console.log('Server listening on: http://localhost:%s', PORT);
 });
+
+
+function parseJSON (data) {
+  var file = data.toString(),
+    json;
+  try {
+    json = JSON.parse(file);
+  } catch (e) {
+    console.log('Not valid JSON! ' + e.message);
+  }
+  return json;
+}
